@@ -5,10 +5,10 @@
 
 import React from 'react';
 import {
-	Dimensions,
 	View,
 	Button,
 } from 'react-native';
+import XRoutines from './XRoutines.js';
 
 export default class XButton extends React.Component {
 	constructor(props){
@@ -35,8 +35,7 @@ export default class XButton extends React.Component {
 		console.log("On XButton layout.");
 
 		// Get window size
-		var screen = Dimensions.get('window'); 
-		console.log("Screen:" + JSON.stringify(screen));
+		var screen = XRoutines.screen();
 		
 		// Width
 		var width;

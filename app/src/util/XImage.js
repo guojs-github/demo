@@ -7,8 +7,8 @@ import React from 'react';
 import {
 	Text,
 	Image,
-	Dimensions,
 } from 'react-native';
+import XRoutines from './XRoutines.js'
 
 export default class XImage extends React.Component {
 	constructor(props){
@@ -41,10 +41,9 @@ export default class XImage extends React.Component {
 		};
 	}
 
-	render(){
+	render(){		
 		// Get window size
-		var screen = Dimensions.get('window'); 
-		console.log("Screen:" + JSON.stringify(screen));
+		var screen = XRoutines.screen(); 
 		
 		// Width
 		var width;

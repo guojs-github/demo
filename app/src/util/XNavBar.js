@@ -6,10 +6,10 @@
 import React from 'react';
 import {
 	StyleSheet,
-	Dimensions,
 	Text,
 	View,
 } from 'react-native';
+import XRoutines from './XRoutines.js'
 
 export default class XNavBar extends React.Component {
 	constructor(props){
@@ -34,8 +34,7 @@ export default class XNavBar extends React.Component {
 	onLayout(e) {
 		console.log("XNavBar layout event recognized.");
 		// Get window size
-		var screen = Dimensions.get('window'); 
-		console.log("Screen:" + JSON.stringify(screen));
+		var screen = XRoutines.screen(); 
 		
 		// Width
 		var width = screen.width;
