@@ -10,69 +10,65 @@ import {
 	View,
 	Text,
 	Image,
+	Linking,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
-import XRoutines from './util/XRoutines.js';
+import XRoutines from './util/XRoutines.js'
+import XSwiperImage from './util/XSwiperImage.js';
 
 export default class Home extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
 			pics: [
-				{ source: require('../img/sample.jpg') },
-				{ source: require('../img/sample.jpg') },
+				{ source: require('../img/sample.jpg'), url: "http://www.baidu.com" },
+				{ source: require('../img/sample.jpg'), url: "http://news.sina.com.cn"},
 			],
 			swiper: {
 				width: 100,
-				height: 100,
-			},
+				height: 250,
+			}
 		};
-		this.renderSwiperItem = this.renderSwiperItem.bind( this );
+		this.onSwiperLayout = this.onSwiperLayout.bind(this);
+		this.onSwiperTouch = this.onSwiperTouch.bind(this);
 	}
 
-	onLayout() {
-		console.log("On Home layout.");
+	onSwiperLayout() {
+		console.log("On home page swiper layout.");
 
 		// Get window size
 		var screen = XRoutines.screen(); 
+
+		// width
+		var width = screen.width - 10 - 10;
+		// height
+		var height = 250;
 		
 		// Update
 		this.setState({
 			swiper: {
-				width: screen.width,
-				height: 250,
+				width: width,
+				height: height,
 			},
 		});
 	}
 	
-	renderSwiperItem(item) {
-		console.log("Render swiper item.");
-		console.log("item:" + JSON.stringify(item));
-		return <Image 
-					source={ item.source } 
-					style={{width: this.state.swiper.width, height:this.state.swiper.height, resizeMode: 'cover'}}
-				/>;
+	onSwiperTouch(index) {
+		console.log("On touch home page swiper.");
+		console.log("index:" + index);
+		
+		if ("string" == typeof(this.state.pics[index].url))
+			Linking.openURL(this.state.pics[index].url);
 	}
 	
 	render(){
 		return (
 			<ScrollView contentContainerStyle={ styles.container } >
-				<View onLayout={ () => this.onLayout()}>
-				<Swiper
-					style={ styles.swiper }
-					width={ this.state.swiper.width }
-					height={ this.state.swiper.height }
-					horizontal={ true } // 图片是否横向排列
-					paginationStyle={ styles.pagination } // 轮播图小圆点的样式定义
-					showsButtons={ true } // 是否显示左右导航按钮
-					loop={ true } // 是否循环播放
-					autoplayTimeout={ 5 } // 自动播放时长，秒
-					autoplay={ true } //是否自动播放
-				> 
-					{	
-						this.state.pics.map((value) => this.renderSwiperItem(value)) // 依据数组显示数据 
-					}
-				</Swiper>
+				<View style={{ marginTop: 20, marginLeft: 10, marginRight: 10,}} onLayout={ this.onSwiperLayout }>
+					<XSwiperImage 
+						pics={ this.state.pics } 
+						width={ this.state.swiper.width } 
+						height={ this.state.swiper.height }
+						onTouch={ this.onSwiperTouch }/>
 				</View>
 			</ScrollView>
 		);
@@ -82,14 +78,10 @@ export default class Home extends React.Component{
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
-//		flex: 1,
+//		flex: 1, // 这个会让页面局限于只显示一屏
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF',
 	},
-    swiper: { 
-	},
-	pagination: {
-		bottom: 10,
-	}
 });
+
