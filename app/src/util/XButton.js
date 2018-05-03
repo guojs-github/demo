@@ -8,7 +8,7 @@ import {
 	View,
 	Button,
 } from 'react-native';
-import XRoutines from './XRoutines.js';
+import XRoutines from './common/XRoutines.js';
 
 export default class XButton extends React.Component {
 	constructor(props){

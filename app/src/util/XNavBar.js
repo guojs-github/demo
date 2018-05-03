@@ -9,7 +9,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
-import XRoutines from './XRoutines.js'
+import XRoutines from './common/XRoutines.js'
 
 export default class XNavBar extends React.Component {
 	constructor(props){

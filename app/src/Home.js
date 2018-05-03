@@ -9,11 +9,13 @@ import {
 	ScrollView,
 	View,
 	Text,
-	Image,
 	Linking,
+	Alert,
 } from 'react-native';
-import XRoutines from './util/XRoutines.js'
-import XSwiperImage from './util/XSwiperImage.js';
+import XRoutines from './util/common/XRoutines.js'
+import XRequest from './util/common/XRequest.js';
+import XSwiperImage from './util/XSwiperImage';
+import XButton from './util/XButton';
 
 export default class Home extends React.Component{
 	constructor(props){
@@ -28,11 +30,13 @@ export default class Home extends React.Component{
 				height: 250,
 			}
 		};
-		this.onSwiperLayout = this.onSwiperLayout.bind(this);
+		this.onLayout = this.onLayout.bind(this);
 		this.onSwiperTouch = this.onSwiperTouch.bind(this);
+		this.onClickSendGetRequest = this.onClickSendGetRequest.bind(this);
+		this.onClickSendPostRequest = this.onClickSendPostRequest.bind(this);
 	}
 
-	onSwiperLayout() {
+	onLayout() {
 		console.log("On home page swiper layout.");
 
 		// Get window size
@@ -60,16 +64,75 @@ export default class Home extends React.Component{
 			Linking.openURL(this.state.pics[index].url);
 	}
 	
+	onClickSendGetRequest(e) {
+		console.log("On click send get request.");
+		
+		XRequest.get("https://www.mdero.com/esplatform/restlet/wxapprs/info", 10000).then(
+			function(data) {
+				console.log("Send get request success.");
+				console.log("data:" + data);
+				Alert.alert(
+					"Success",
+					"Get data:" + data
+				);
+			},
+			function(message) {
+				console.log("Send get request fail.");
+				console.log("message:" + message);
+				Alert.alert(
+					"Fail",
+					"Message:" + message
+				);
+			}
+		);
+	}
+
+	onClickSendPostRequest(e) {
+		console.log("On click send post request.");
+		
+		XRequest.post("https://www.mdero.com/esplatform/restlet/wxapprs/pay/closeOrder").then(
+			function(data) {
+				console.log("Send post request success.");
+				console.log("data:" + data);
+				Alert.alert(
+					"Success",
+					"Get data:" + data
+				);
+			},
+			function(message) {
+				console.log("Send post request fail.");
+				console.log("message:" + message);
+				Alert.alert(
+					"Fail",
+					"Message:" + message
+				);
+			}
+		);
+	}
+	
 	render(){
 		return (
-			<ScrollView contentContainerStyle={ styles.container } >
-				<View style={{ marginTop: 20, marginLeft: 10, marginRight: 10,}} onLayout={ this.onSwiperLayout }>
-					<XSwiperImage 
-						pics={ this.state.pics } 
-						width={ this.state.swiper.width } 
-						height={ this.state.swiper.height }
-						onTouch={ this.onSwiperTouch }/>
-				</View>
+			<ScrollView contentContainerStyle={ styles.container } onLayout={ this.onLayout }>
+				<XSwiperImage 
+					style={{marginTop: 10}}
+					pics={ this.state.pics } 
+					width={ this.state.swiper.width } 
+					height={ this.state.swiper.height }
+					onTouch={ this.onSwiperTouch }/>
+				<XButton
+					style={{marginTop: 10}}
+					title="Send get request"
+					color="#FF5500"
+					width={ .9 }
+					onClick = { this.onClickSendGetRequest }
+				/>
+				<XButton
+					style={{marginTop: 10}}
+					title="Send post request"
+					color="#FF5500"
+					width={ .9 }
+					onClick = { this.onClickSendPostRequest }
+				/>
 			</ScrollView>
 		);
 	}

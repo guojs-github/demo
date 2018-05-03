@@ -10,7 +10,7 @@ import {
 	Image,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import XRoutines from './XRoutines.js'
+import XRoutines from './common/XRoutines.js'
 
 export default class XSwiperImage extends React.Component {
 	constructor(props){
@@ -96,7 +96,7 @@ export default class XSwiperImage extends React.Component {
 				
 		return (
 			<Swiper
-				style={ styles.swiper }
+				style={ [styles.swiper, this.props.style] }
 				width={ width }
 				height={ height }
 				horizontal={ true } // Í¼Æ¬ÊÇ·ñºáÏòÅÅÁÐ
