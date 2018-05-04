@@ -9,6 +9,7 @@ import {
 	View,
 	Text,
 } from 'react-native';
+import XRoutines from './util/common/XRoutines.js';
 import XImage from './util/XImage';
 import XButton from './util/XButton';
 import XNavBar from './util/XNavBar';
@@ -18,6 +19,7 @@ export default class Login extends React.Component{
 		super(props);
 		this.state = {};
 		this.onLogin = this.onLogin.bind(this);
+		this.onLayout = this.onLayout.bind(this);
 	}
 	
 	onLogin(e) {
@@ -25,10 +27,15 @@ export default class Login extends React.Component{
 		if ("function" == typeof(this.props.onSuccess))
 			this.props.onSuccess();
 	}
+	
+	onLayout() {
+		console.log("On login dialog layout");
+		this.forceUpdate();
+	}
 
 	render(){
 		return (
-			<View style={ styles.container }>
+			<View style={ styles.container } onLayout={ this.onLayout }>
 				<XNavBar
 					style = {{ fontSize: 18, }}
 					title="React Native演示"

@@ -27,12 +27,9 @@ export default class XNavBar extends React.Component {
 			customizedStyle: customizedStyle,
 		};
 		
-		// Event
-		this.onLayout = this.onLayout.bind(this);
 	}
 	
-	onLayout(e) {
-		console.log("XNavBar layout event recognized.");
+	render(){
 		// Get window size
 		var screen = XRoutines.screen(); 
 		
@@ -40,26 +37,14 @@ export default class XNavBar extends React.Component {
 		var width = screen.width;
 		
 		// Height
-		var height;
+		var height = 50;
 		if ("number" == typeof(this.props.height)) {
-			if (1 <= this.props.height)
+			if (1 < this.props.height)
 				height = this.props.height;
-			else if ((0 < this.props.height) || (1 > this.props.height))
+			else if ((0 < this.props.height) || (1 >= this.props.height))
 				height = screen.height * this.props.height;
-			else 
-				height = 50;
-		} else 
-			height = 50;
+		} 
 			
-		// Update
-		this.setState({
-			width: width,
-			height: height,
-		});
-	}
-
-	render(){
-
 		// Specified style
 		var style = {
 			position: 'absolute',
@@ -69,8 +54,8 @@ export default class XNavBar extends React.Component {
 			flex:1, 
 			justifyContent: 'center', 
 			alignItems: 'center',
-			width: this.state.width,
-			height: this.state.height,
+			width: width,
+			height: height,
 			backgroundColor: "white",
 
 			shadowOffset: {width: 0, height: 5},  
@@ -86,8 +71,8 @@ export default class XNavBar extends React.Component {
 			title = this.props.title;
 
 		return (
-			<View style={ style } onLayout={ () => this.onLayout()}>
-				<Text style={ [ styles.title, this.state.customizedStyle] }>
+			<View style={style}>
+				<Text style={[styles.title, this.state.customizedStyle]}>
 					{ title }
 				</Text>
 			</View>

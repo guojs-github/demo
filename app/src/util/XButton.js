@@ -28,33 +28,8 @@ export default class XButton extends React.Component {
 		
 		// Event
 		this.onClick = this.onClick.bind(this);
-		this.onLayout = this.onLayout.bind(this);
 	}
-	
-	onLayout() {
-		console.log("On XButton layout.");
-
-		// Get window size
-		var screen = XRoutines.screen();
 		
-		// Width
-		var width;
-		if ("number" == typeof(this.props.width)) {
-			if (1 < this.props.width)
-				width = this.props.width;
-			else if ((0 < this.props.width) || (1 > this.props.width))
-				width = screen.width * this.props.width;
-			else 
-				width = 100;
-		} else 
-			width = 100;
-		
-		// Update
-		this.setState({
-			width: width,
-		});
-	}
-	
 	onClick() {
 		console.log("On XButton click");
 		if ("function" == typeof(this.props.onClick))
@@ -62,10 +37,20 @@ export default class XButton extends React.Component {
 	}
 
 	render(){
+		// Get window size
+		var screen = XRoutines.screen();
 		
+		// Width
+		var width = 100;
+		if ("number" == typeof(this.props.width)) {
+			if (1 < this.props.width)
+				width = this.props.width;
+			else if ((0 < this.props.width) || (1 >= this.props.width))
+				width = screen.width * this.props.width;
+		} 		
 		// Specified style
 		var style = {
-			width: this.state.width,
+			width: width,
 		};
 		
 		var title = "未命名";
@@ -77,7 +62,7 @@ export default class XButton extends React.Component {
 			color = this.props.color;
 
 		return (
-			<View style={ [ style, this.state.customizedStyle ] } onLayout={ () => this.onLayout() }>
+			<View style={[style, this.state.customizedStyle]}>
 				<Button
 					onPress={ () => this.onClick() }
 					title={ title }

@@ -8,17 +8,16 @@ import {
 	StyleSheet,
 	ScrollView,
 	View,
-	Text,
 	Linking,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
 import XRoutines from './util/common/XRoutines.js'
 import XRequest from './util/common/XRequest.js';
 import XDialog from './util/common/XDialog.js';
 import XSwiperImage from './util/XSwiperImage';
 import XButton from './util/XButton';
+import XNavBar from './util/XNavBar';
 
-class HomeScreen extends React.Component{
+export default class Home extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -26,10 +25,6 @@ class HomeScreen extends React.Component{
 				{ source: require('../img/sample.jpg'), url: "http://www.baidu.com" },
 				{ source: require('../img/sample.jpg'), url: "http://news.sina.com.cn"},
 			],
-			swiper: {
-				width: 100,
-				height: 250,
-			}
 		};
 		this.onLayout = this.onLayout.bind(this);
 		this.onSwiperTouch = this.onSwiperTouch.bind(this);
@@ -38,23 +33,8 @@ class HomeScreen extends React.Component{
 	}
 
 	onLayout() {
-		console.log("On home page swiper layout.");
-
-		// Get window size
-		var screen = XRoutines.screen(); 
-
-		// width
-		var width = screen.width - 10 - 10;
-		// height
-		var height = 250;
-		
-		// Update
-		this.setState({
-			swiper: {
-				width: width,
-				height: height,
-			},
-		});
+		console.log("On home page layout.");
+		this.forceUpdate();
 	}
 	
 	onSwiperTouch(index) {
@@ -100,29 +80,44 @@ class HomeScreen extends React.Component{
 	}
 	
 	render(){
+		// Get window size
+		var screen = XRoutines.screen(); 
+
+		// swiper size
+		var swiperWidth = screen.width - 10 - 10;
+		var swiperHeight = 250;
+		
+		// button size
+		var buttonWidth = swiperWidth;
+		
 		return (
-			<ScrollView contentContainerStyle={ styles.container } onLayout={ this.onLayout }>
-				<XSwiperImage 
-					style={{marginTop: 10}}
-					pics={ this.state.pics } 
-					width={ this.state.swiper.width } 
-					height={ this.state.swiper.height }
-					onTouch={ this.onSwiperTouch }/>
-				<XButton
-					style={{marginTop: 10}}
-					title="Send get request"
-					color="#FF5500"
-					width={ .9 }
-					onClick = { this.onClickSendGetRequest }
+			<View>
+				<XNavBar
+					style = {{ fontSize: 18, }}
+					title="首页"
 				/>
-				<XButton
-					style={{marginTop: 10}}
-					title="Send post request"
-					color="#FF5500"
-					width={ .9 }
-					onClick = { this.onClickSendPostRequest }
-				/>
-			</ScrollView>
+				<ScrollView contentContainerStyle={ styles.container } onLayout={ this.onLayout }>
+					<XSwiperImage 
+						pics={ this.state.pics } 
+						width={ swiperWidth } 
+						height={ swiperHeight }
+						onTouch={ this.onSwiperTouch }/>
+					<XButton
+						style={{marginTop: 10}}
+						title="Send get request"
+						color="#FF5500"
+						width={ buttonWidth }
+						onClick = { this.onClickSendGetRequest }
+					/>
+					<XButton
+						style={{marginTop: 10}}
+						title="Send post request"
+						color="#FF5500"
+						width={ buttonWidth }
+						onClick = { this.onClickSendPostRequest }
+					/>
+				</ScrollView>
+			</View>
 		);
 	}
 }
@@ -134,41 +129,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: null, // 背景色透明
+		paddingTop: 60,
 	},
 });
-
-const RouteConfig = {
-	Home: {
-		screen: HomeScreen,
-		navigationOptions: { // 此处覆盖统一样式设置
-			title: "首页",
-			headerTitleStyle: {
-				color: "blue",
-			},
-		},
-	},
-};
-
-const NavigationConfig = {
-	initialRouteName: 'Home', // 指定首先显示的屏幕
-	navigationOptions: { // 导航栏统一样式设置
-		// header: null, // 将隐藏标题
-		headerStyle: {
-			backgroundColor: "white",
-			height: 50,
-		},
-		headerTitleStyle: {
-			color: "gray",
-			fontSize: 18,
-		}
-	},
-	headerMode: 'screen', 
-};
-
-const RootStack = StackNavigator(RouteConfig, NavigationConfig);// 建立一个故事模板
-
-export default class Home extends React.Component {
-	render() {
-		return <RootStack />;
-	}
-}

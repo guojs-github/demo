@@ -3,21 +3,27 @@
  * 2018.4.23 GuoJS
  */
 
-import React from 'react';
+ import React from 'react';
 import {
 	StyleSheet,
 	View,
-	Text,
+	ScrollView,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import MyOrdersListScreen from './MyOrdersList';
 import XButton from './util/XButton';
+import XMenu from './util/XMenu';
+import XNavBar from './util/XNavBar';
 
-class MyOrdersScreen extends React.Component{
+export default class MyOrders extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {};
+		this.state = {};		
+		this.onLayout = this.onLayout.bind(this);
 		this.onClickList = this.onClickList.bind(this);
+	}
+
+	onLayout() {
+		console.log("On my orders layout.");
+		this.forceUpdate();
 	}
 	
 	onClickList(){
@@ -27,54 +33,30 @@ class MyOrdersScreen extends React.Component{
 	
 	render(){
 		return (
-			<View>
-				<XButton
-					style={{marginTop: 10}}
-					title="test"
-					color="#FF5500"
-					width={ .9 }
-					onClick = { this.onClickList }
+			<View onLayout={ this.onLayout }>
+				<XNavBar
+					style = {{ fontSize: 18, }}
+					title="我的订单"
 				/>
+				<ScrollView contentContainerStyle={ styles.container }>
+					<XMenu 
+						title="全部"
+						arrow={ require('../img/arrow-right.png') } 						
+						onClick = { this.onClickList }
+					/>
+				</ScrollView>
 			</View>
 		);
 	}
 }
 
-const RouteConfig = {
-	MyOrders: {
-		screen: MyOrdersScreen,
-		navigationOptions: { // 此处覆盖统一样式设置
-			title: "我的订单",
-		},
+const styles = StyleSheet.create({
+	container: {
+		flexDirection: 'column',
+//		flex: 1, // 这个会让页面局限于只显示一屏
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		backgroundColor: null, // 背景色透明
+		paddingTop: 60,
 	},
-	MyOrdersList: {
-		screen: MyOrdersListScreen,
-		navigationOptions: { // 此处覆盖统一样式设置
-			title: "我的订单列表",
-		},
-	},
-};
-
-const NavigationConfig = {
-	initialRouteName: 'MyOrders', // 指定首先显示的屏幕
-	navigationOptions: { // 导航栏统一样式设置
-		// header: null, // 将隐藏标题
-		headerStyle: {
-			backgroundColor: "white",
-			height: 50,
-		},
-		headerTitleStyle: {
-			color: "gray",
-			fontSize: 18,
-		}
-	},
-	headerMode: 'screen', 
-};
-
-const RootStack = StackNavigator(RouteConfig, NavigationConfig);// 建立一个故事模板
-
-export default class MyOrders extends React.Component {
-	render() {
-		return <RootStack />;
-	}
-}
+});

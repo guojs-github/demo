@@ -18,6 +18,7 @@ import {
 import Home from './Home'
 import MyOrders from './MyOrders'
 import Me from './Me'
+import MyOrdersList from './MyOrdersList'
 
 export default class Main extends React.Component{
 	constructor(props){
@@ -32,7 +33,7 @@ export default class Main extends React.Component{
 	}
 }
 
-const TabRouteConfigs = {
+const TabRouteConfig = {
 	Home: {
 		screen: Home,
 		navigationOptions: {
@@ -68,7 +69,7 @@ const TabRouteConfigs = {
 	},
 }
 
-const TabNavigatorConfigs = {
+const TabNavigatorConfig = {
     initialRouteName: 'Home', // 初始化显示的页面
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
@@ -94,9 +95,7 @@ const TabNavigatorConfigs = {
 	},
 };
 
-const Tab = TabNavigator(TabRouteConfigs, TabNavigatorConfigs);
-
-
+const Tab = TabNavigator(TabRouteConfig, TabNavigatorConfig);
 
 const styles = StyleSheet.create({
 	tabIcon: {
@@ -105,20 +104,34 @@ const styles = StyleSheet.create({
 	},
 });
 
-
 const StackRouteConfig = {
 	Main: {
 		screen: Tab,
+		navigationOptions: { // 此处覆盖统一样式设置
+			header: null, // 隐藏标题
+		},
+	},
+	MyOrdersList: {
+		screen: MyOrdersList,
+		navigationOptions: { // 此处覆盖统一样式设置
+			title: "我的订单列表",
+		},
 	},
 };
 
 const StackNavigationConfig = {
 	initialRouteName: 'Main', // 指定首先显示的屏幕
 	navigationOptions: { // 导航栏统一样式设置
-		header: null, // 将隐藏标题
+		headerStyle: {
+			backgroundColor: "white",
+			height: 50,
+		},
+		headerTitleStyle: {
+			color: "gray",
+			fontSize: 18,
+		}
 	},
 	headerMode: 'screen', 
 };
 
 const Stack = StackNavigator(StackRouteConfig, StackNavigationConfig);// 建立一个故事模板
-

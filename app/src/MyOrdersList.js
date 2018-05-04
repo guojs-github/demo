@@ -9,8 +9,9 @@ import {
 	View,
 	Text,
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-export default class MyOrdersListScreen extends React.Component{
+export default class MyOrdersList extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {};
