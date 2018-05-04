@@ -27,7 +27,7 @@ export default class Main extends React.Component{
 	
 	render(){
 		return (
-			<Tab/>
+			<Stack/>
 		);
 	}
 }
@@ -96,10 +96,29 @@ const TabNavigatorConfigs = {
 
 const Tab = TabNavigator(TabRouteConfigs, TabNavigatorConfigs);
 
+
+
 const styles = StyleSheet.create({
 	tabIcon: {
 		height: 27,
 		width: 24
 	},
 });
+
+
+const StackRouteConfig = {
+	Main: {
+		screen: Tab,
+	},
+};
+
+const StackNavigationConfig = {
+	initialRouteName: 'Main', // 指定首先显示的屏幕
+	navigationOptions: { // 导航栏统一样式设置
+		header: null, // 将隐藏标题
+	},
+	headerMode: 'screen', 
+};
+
+const Stack = StackNavigator(StackRouteConfig, StackNavigationConfig);// 建立一个故事模板
 

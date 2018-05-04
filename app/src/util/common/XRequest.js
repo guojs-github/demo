@@ -39,7 +39,7 @@ export default {
 		const timeoutPromise = new Promise(function(resolve, reject) {
 			timeoutAction = () => {
 				console.log("Get request time out.");
-				reject("Request time out.");
+				reject("请求超时");
 			}
 		});
 		

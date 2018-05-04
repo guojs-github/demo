@@ -10,14 +10,15 @@ import {
 	View,
 	Text,
 	Linking,
-	Alert,
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import XRoutines from './util/common/XRoutines.js'
 import XRequest from './util/common/XRequest.js';
+import XDialog from './util/common/XDialog.js';
 import XSwiperImage from './util/XSwiperImage';
 import XButton from './util/XButton';
 
-export default class Home extends React.Component{
+class HomeScreen extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -71,18 +72,12 @@ export default class Home extends React.Component{
 			function(data) {
 				console.log("Send get request success.");
 				console.log("data:" + data);
-				Alert.alert(
-					"Success",
-					"Get data:" + data
-				);
+				XDialog.info("收到信息：" + data);
 			},
 			function(message) {
 				console.log("Send get request fail.");
 				console.log("message:" + message);
-				Alert.alert(
-					"Fail",
-					"Message:" + message
-				);
+				XDialog.info("获取信息失败：" + message);
 			}
 		);
 	}
@@ -94,18 +89,12 @@ export default class Home extends React.Component{
 			function(data) {
 				console.log("Send post request success.");
 				console.log("data:" + data);
-				Alert.alert(
-					"Success",
-					"Get data:" + data
-				);
+				XDialog.info("收到信息：" + data);
 			},
 			function(message) {
 				console.log("Send post request fail.");
 				console.log("message:" + message);
-				Alert.alert(
-					"Fail",
-					"Message:" + message
-				);
+				XDialog.info("获取信息失败：" + message);
 			}
 		);
 	}
@@ -144,7 +133,42 @@ const styles = StyleSheet.create({
 //		flex: 1, // 这个会让页面局限于只显示一屏
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		backgroundColor: null, // 背景色透明
 	},
 });
 
+const RouteConfig = {
+	Home: {
+		screen: HomeScreen,
+		navigationOptions: { // 此处覆盖统一样式设置
+			title: "首页",
+			headerTitleStyle: {
+				color: "blue",
+			},
+		},
+	},
+};
+
+const NavigationConfig = {
+	initialRouteName: 'Home', // 指定首先显示的屏幕
+	navigationOptions: { // 导航栏统一样式设置
+		// header: null, // 将隐藏标题
+		headerStyle: {
+			backgroundColor: "white",
+			height: 50,
+		},
+		headerTitleStyle: {
+			color: "gray",
+			fontSize: 18,
+		}
+	},
+	headerMode: 'screen', 
+};
+
+const RootStack = StackNavigator(RouteConfig, NavigationConfig);// 建立一个故事模板
+
+export default class Home extends React.Component {
+	render() {
+		return <RootStack />;
+	}
+}
