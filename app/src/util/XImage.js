@@ -34,7 +34,6 @@ export default class XImage extends React.Component {
 			round = false;
 		
 		this.state = {
-			source: props.source,
 			resizeMode: resizeMode,
 			customizedStyle: customizedStyle,
 			round: round,
@@ -84,7 +83,7 @@ export default class XImage extends React.Component {
 		return (
 			<Image 
 				style={ [ style, this.state.customizedStyle ] } 
-				source={ this.state.source } 
+				source={ this.props.source } 
 			/>
 		);
 	}

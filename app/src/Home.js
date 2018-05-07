@@ -130,5 +130,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: null, // 背景色透明
 		paddingTop: 60,
+		paddingBottom: 10,
 	},
 });

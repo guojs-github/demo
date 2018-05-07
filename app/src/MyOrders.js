@@ -3,13 +3,12 @@
  * 2018.4.23 GuoJS
  */
 
- import React from 'react';
+import React from 'react';
 import {
 	StyleSheet,
 	View,
 	ScrollView,
 } from 'react-native';
-import XButton from './util/XButton';
 import XMenu from './util/XMenu';
 import XNavBar from './util/XNavBar';
 
