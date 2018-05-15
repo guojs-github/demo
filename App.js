@@ -3,9 +3,13 @@
  * 2018.4.19 GuoJS
  */
 import React from 'react';
+import {
+	NativeModules,
+} from 'react-native';
 import Cover from './app/src/Cover'
 import Login from './app/src/Login'
 import Main from './app/src/Main'
+import JPushModule from 'jpush-react-native';
 
 export default class App extends React.Component {
 	constructor(props){
@@ -16,6 +20,36 @@ export default class App extends React.Component {
 		this.onCoverTimeIsUp = this.onCoverTimeIsUp.bind(this);
 		this.onLoginSuccess = this.onLoginSuccess.bind(this);
 	}
+
+	componentDidMount() {
+		var _this = this;
+		JPushModule.notifyJSDidLoad((resultCode) => {
+            if (resultCode === 0) {
+				// alert("JS did load");
+            }
+        });		
+
+		JPushModule.addGetRegistrationIdListener((registrationId) => {
+			alert("Get registration id");
+            console.log("Device register succeed, registrationId " + registrationId);
+        });
+
+		JPushModule.addReceiveNotificationListener((map) => {
+			console.log("notification received:" + JSON.stringify(map))
+			alert("notification received:" + JSON.stringify(map));
+		});		
+		
+		JPushModule.addReceiveOpenNotificationListener((map) => {
+            console.log("Open notification:" + JSON.stringify(map));
+			alert("Open notification:" + JSON.stringify(map));
+        });		
+
+		// Registration id
+		NativeModules.demoObject.rid((value) => {
+			console.log("Registration id:" + value);
+		});
+    }
+
 	
 	onCoverTimeIsUp() {
 		console.log("Cover time is up.");

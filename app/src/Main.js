@@ -19,6 +19,7 @@ import Home from './Home'
 import MyOrders from './MyOrders'
 import Me from './Me'
 import MyOrdersList from './MyOrdersList'
+import JPush from './JPush'
 
 export default class Main extends React.Component{
 	constructor(props){
@@ -115,6 +116,12 @@ const StackRouteConfig = {
 		screen: MyOrdersList,
 		navigationOptions: { // 此处覆盖统一样式设置
 			title: "我的订单列表",
+		},
+	},
+	JPush: {
+		screen: JPush,
+		navigationOptions: { // 此处覆盖统一样式设置
+			title: "极光消息推送",
 		},
 	},
 };

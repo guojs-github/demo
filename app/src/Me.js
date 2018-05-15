@@ -29,6 +29,7 @@ export default class Me extends React.Component{
 		this.onLayout = this.onLayout.bind(this);
 		this.onClickGPS = this.onClickGPS.bind(this);
 		this.onClickCamera = this.onClickCamera.bind(this);
+		this.onClickPushMessage = this.onClickPushMessage.bind(this);
 	}
 
 	onLayout() {
@@ -65,7 +66,12 @@ export default class Me extends React.Component{
 			},
 		);
 	}
-	
+
+	onClickPushMessage() {
+		console.log("On click push message button.");
+		this.props.navigation.navigate('JPush');				
+	}
+
 	render(){
 		// Get window size
 		var screen = XRoutines.screen(); 
@@ -100,6 +106,14 @@ export default class Me extends React.Component{
 							onClick={ this.onClickCamera }
 						/>
 					</TouchableHighlight>
+					<XButton
+						style={[styles.seperator]}
+						title="测试消息推送"
+						color="#FF5500"
+						width={ buttonWidth }
+						onClick = { this.onClickPushMessage }
+					/>
+					
 				</ScrollView>
 			</View>
 		);

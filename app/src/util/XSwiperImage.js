@@ -93,10 +93,9 @@ export default class XSwiperImage extends React.Component {
 		} 
 		if ((0 < height) && (1 >= height))
 			height = screen.height * height;
-				
+						
 		return (
 			<Swiper
-				style={ [styles.swiper, this.props.style] }
 				width={ width }
 				height={ height }
 				horizontal={ true } // Í¼Æ¬ÊÇ·ñºáÏòÅÅÁÐ
@@ -117,8 +116,6 @@ export default class XSwiperImage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    swiper: { 
-	},
 	pagination: {
 		bottom: 10,
 	}

@@ -31,7 +31,9 @@ export default {
 					reject(JSON.stringify(error));
 				},
 				{
-					timeout: 1000,
+					timeout: 3000, // ms, 操作过程的时长
+					maximumAge: 1000, // ms, 取得数据的有效时长，0应该是每次都刷新数据
+					// enableHighAccuracy: true, //是否高精度，可能会耗时
 				}
 			);
 		});
